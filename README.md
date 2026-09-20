@@ -20,18 +20,35 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 
 ### ⚙️ App Core & Architecture
 - `[x]` **Jetpack Compose UI Framework & Material 3 Theming**
-- `[x]` **Theme Switching System** (System Default / Light Theme / Dark Theme)
+- `[x]` **Theme & Color Scheme Customization Engine**
+  - `[x]` Theme Modes (Follow System / Light Theme / Dark Theme)
+  - `[x]` Color Scheme Options (Sky Blue Default, Material You Dynamic Color, Custom Palette)
+  - `[x]` Custom ARGB/Hex Color Picker with Live Theme Preview, Preset Swatches, and RGBA Sliders
 - `[x]` **Navigation Engine**
   - `[x]` Bottom Navigation Bar Routing
-  - `[x]` Navigation Bar Style Customization (Floating Bar vs. Fixed Bottom Bar)
-- `[/]` **User Profile Management**
-  - `[/]` Multi-step Onboarding Carousel (Name, University, Program, Year Level, Avatar selection)
-  - `[/]` Profile Picture Storage & Initials Avatar Fallback
-  - `[/]` Local Profile Persistence (DataStore)
+  - `[x]` Navigation Bar Style Customization (Floating Dock with Bouncy Drag Physics vs. Fixed Bottom Bar)
+  - `[x]` Smooth Animated Screen & Subscreen Transitions (`AnimatedContent` Fade/Scale)
+- `[x]` **User Profile Management**
+  - `[x]` **5-Step Interactive Onboarding Walkthrough**:
+    - Page 1: Welcome & Scrollable Live Mock Schedule Preview with top-right "Skip" action.
+    - Page 2: Student Profile Setup Form (Full Name \*, Email Address \*, Age, Year Level Chips [`1st Year` to `Extendee`], Student Status Chips [`Regular`, `Irregular`, `Shiftee`], Program \*, University \*).
+    - Page 3: Class Alert Preferences (Reminder Offset chips, Custom Duration picker, Daily View vs. Weekly Grid preview).
+    - Page 4: Attendance Target Setup (Target percentage slider, live subject status badges with Philippine academic grading rules: *Safe*, *Target Met*, *Warning*, *Advised to Withdraw / 5.0*).
+    - Page 5: Personalization & Theme Styling.
+  - `[x]` **Dedicated Manage Profile Sub-Screen** (`ManageProfileScreen`):
+    - Top bar with Back arrow `←` and `"Manage profile"` title.
+    - Avatar circle showing user initials (`UserInitials`) or profile photo.
+    - System Photo Picker (`PickVisualMedia`) for gallery photo selection & local file storage.
+    - Compact form layout with side-by-side fields (`Email address` + `Age`).
+    - Year Level & Student Status chips.
+    - Save changes action updating DataStore.
+  - `[x]` Profile Persistence (DataStore) & Initials Avatar Fallback
 - `[x]` **App Settings & Preferences**
   - `[x]` Master Notifications Toggle
   - `[x]` Selective Notification Categories Bottom Sheet
   - `[x]` Class Reminder Duration Configuration (Presets + Custom Dialog with Minutes/Hours/Days units)
+  - `[x]` Custom Theme Color Picker Bottom Sheet
+  - `[x]` Manage Profile Navigation Entry with Chevron Indicator (`>`)
   - `[x]` Navigation Bar Style Picker
   - `[x]` App Version Secret Easter Egg (7-tap trigger)
 
@@ -85,56 +102,35 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 
 ## 🌟 Key Features Overview
 
-### 📅 Class Schedules & Course Information
-- **Flexible Week Views**: Default Monday-to-Friday layout with full support for adding custom days (e.g., Saturday or Sunday classes).
-- **Multiple Layout Views**: Switch between a structured **Column View** (timetable format) and a full **Calendar View**.
-- **Class Type & Delivery Modality Tags**:
-  - **Class Classification**: Categorize classes as **Lecture** or **Laboratory**.
-  - **Delivery Modalities**: Tag courses as *Face-to-Face*, *Asynchronous*, or *Hybrid / Both*.
-  - **Smart Laboratory Constraints**: Setting a course as a **Laboratory** automatically restricts the modality to **Face-to-Face** only (disabling Asynchronous and Hybrid options) to reflect hands-on lab requirements.
-- **Comprehensive Course Metadata**: Store essential course details including:
-  - Course Code & Course Name
-  - Course Units / Credits
-  - Course Section
-  - Course Faculty (Professor / Instructor handling the course)
-  - Course Room & Location
+### 🎨 Deep Customization & Theme Engine
+- **Theme Modes**: Easily switch between **System Default**, **Light Theme**, and **Dark Theme**.
+- **Color Schemes**: Choose between **Sky Blue (Default)**, **Material You Dynamic Color** (matching Android 12+ wallpaper accents), or **Custom Theme**.
+- **Custom RGBA Color Picker**: Fine-tune custom primary colors using RGBA sliders, hex input field (`#HEX`), preset swatches, and a live preview card.
+- **Navigation Dock Style**: Toggle between a classic **Fixed Bottom Bar** and a floating **Interactive Dock** with bouncy spring drag gesture physics.
 
-### 📊 Customizable Class Attendance
-- **Expanded Status Options**: Go beyond standard *Present*, *Absent*, or *Excused* by creating custom attendance statuses (e.g., *No Class*, *Professor On Leave*, *Holiday*).
-- **Custom Color Coding**: Fully customize colors for both default and custom attendance statuses.
+### 🚀 5-Step Interactive Onboarding
+- **Page 1 (Welcome & Schedule)**: Features a top-right **"Skip"** button, key benefit cards, and a scrollable **Live Schedule Preview** showing a realistic daily timetable.
+- **Page 2 (Student Profile Setup)**: Collects student identity details (**Full Name**, **Email**, **Age**, **Year Level**, **Student Status**, **Program**, **University**). Required fields prevent skipping without key information.
+- **Page 3 (Class Alerts)**: Configures default reminder offsets (`5 min` to `30 min` + `Custom...`) and displays live daily notification / weekly grid previews.
+- **Page 4 (Attendance Targets)**: Interactive target percentage slider (`60%` to `95%`) with live subject status cards (*Safe*, *Target Met*, *Warning*, *Advised to Withdraw / 5.0*).
+- **Page 5 (Personalization)**: Fine-tune app theme mode, color scheme palette, and navigation dock style before entering the app.
 
-### 📝 Assignments & 🎓 Exams
-- **Assignments**: Track upcoming deadlines, due dates, submission status, and assignment details.
-- **Exams**: Keep track of upcoming exams, exam schedules, topics, and room locations.
-
-### 📈 GPA Calculator & Target Grade Estimator
-- **GPA Calculation**: Calculate semester and cumulative GPA based on course units and grade inputs.
-- **Target Grade Estimator**: Calculate the exact grade needed on final exams or remaining assessments to reach a desired target final grade.
-
-### ⏰ Smart & Custom Class Reminders
-- Set notifications before classes using standard preset times (5m, 10m, 15m, 30m, 1h) or custom durations with unit selection (Minutes, Hours, Days) and configurable maximum limits.
-
-### 🔕 Auto-Mute / Do Not Disturb During Class
-- Automatically toggle Do Not Disturb (DND) or silent mode on your phone during active class times to prevent unexpected ringers or interruptions during lectures.
-
-### 📱 Home Screen Widgets
-- Android Home Screen Widgets to view upcoming classes, daily schedules, and urgent deadlines at a glance without opening the app.
-
-### 🗂️ Academic Archive & Semester Reset Manager
-- **Semester Reset**: Clear the current semester's schedule when starting a new academic term.
-- **Flexible Archiving Options**: When clearing a schedule, choose whether to **save the current schedule and records to the Academic Archive** for long-term reference or **permanently delete** without saving.
+### 👤 Manage Profile Sub-Screen
+- Dedicated subscreen accessible via Settings featuring a `>` chevron indicator.
+- Tap avatar to upload a profile picture from gallery (`PickVisualMedia`) or view initials avatar fallback.
+- Space-efficient side-by-side layout for compact fields (`Email address` + `Age`) and filter chips for Year Level (`1st year` to `5th year+`) & Student Status (`Regular`, `Irregular`, `Shiftee`).
+- Saves changes directly to DataStore preferences.
 
 ---
 
 ## 🔥 Exclusive Lectrium Features (Not in Lectro)
 
-- ⏳ **Free Time Period / Gap Checker**: Automatically detects and highlights free gaps between class blocks during the day, making it easy to plan study sessions, meals, or rest.
+- 🎨 **RGBA & Hex Custom Theme Engine**: Custom color picker and Material 3 dynamic color generation.
+- ⛵ **Floating Dock Navigation**: Bouncy spring-animated floating navigation dock alongside standard bottom bar.
+- 📊 **Philippine / Academic Attendance Status Rules**: Attendance targets warning when absences exceed the 20% limit (*Advised to Withdraw / 5.0*).
+- ⏳ **Free Time Period / Gap Checker**: Automatically detects and highlights free gaps between class blocks during the day.
 - 🖼️ **Export Schedule as Image**: Export your class timetable into a high-resolution image to save as a wallpaper or share with classmates.
-- 🔄 **Makeup Class Schedule Overrides**: Temporarily change or override specific class schedules for makeup sessions, time shifts, or room swaps without altering your regular weekly timetable.
 - 📈 **GPA & Target Grade Calculator**: Integrated grade calculation and target score estimator.
-- 🧪 **Smart Laboratory Constraints**: Automated rules enforcing Face-to-Face modality for laboratory courses.
-- 🔕 **In-Class Do Not Disturb**: Automated silent mode during class hours.
-- 🗂️ **Academic Archive Manager**: Archive past term schedules and attendance history or clear without saving.
 
 ---
 
