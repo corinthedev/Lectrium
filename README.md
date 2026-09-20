@@ -33,7 +33,7 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
     - Page 1: Welcome & Scrollable Live Mock Schedule Preview with top-right "Skip" action.
     - Page 2: Student Profile Setup Form (Full Name \*, Email Address \*, Age, Year Level Chips [`1st Year` to `Extendee`], Student Status Chips [`Regular`, `Irregular`, `Shiftee`], Program \*, University \*).
     - Page 3: Class Alert Preferences (Reminder Offset chips, Custom Duration picker, Daily View vs. Weekly Grid preview).
-    - Page 4: Attendance Target Setup (Target percentage slider, live subject status badges with Philippine academic grading rules: *Safe*, *Target Met*, *Warning*, *Advised to Withdraw / 5.0*).
+    - Page 4: Attendance Target Setup (Target percentage slider, live subject status badges: *Safe*, *Target Met*, *Warning*, *Advised to Withdraw*).
     - Page 5: Personalization & Theme Styling.
   - `[x]` **Dedicated Manage Profile Sub-Screen** (`ManageProfileScreen`):
     - Top bar with Back arrow `←` and `"Manage profile"` title.
@@ -58,9 +58,9 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 - `[x]` **High-Priority Notification Channel Setup**
 
 ### 📊 Attendance Tracking System
-- `[x]` **20% Maximum Absence Rule Engine** (Calculates 9.0 hours max limit for 3-unit courses / 54 total semester hours)
-- `[x]` **Live Allowance & Warning Badges** (*Safe*, *Warning*, *Critical*, *Advised to Withdraw / 5.0*)
-- `[x]` **Interactive Attendance Actions** (`+ Present`, `+ Absence [1.5h]`)
+- `[x]` **Dynamic Unit-Based Attendance Engine** (Calculates absence allowances dynamically for 1-unit, 2-unit, 3-unit courses)
+- `[x]` **Live Allowance & Warning Badges** (*Safe*, *Warning*, *Critical*, *Advised to Withdraw*)
+- `[x]` **Schedule Integration Ready** (Presents clean empty state awaiting schedule creation)
 
 ### 📅 Class Schedules & Course Management
 - `[ ]` **Schedule Display Views**
@@ -69,7 +69,7 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
   - `[ ]` Flexible Days Layout (Mon–Fri default + Custom Saturday/Sunday days)
 - `[ ]` **Course Metadata**
   - `[ ]` Course Code, Course Name, Course Section
-  - `[ ]` Course Units / Credits
+  - `[ ]` Course Units / Credits (1, 2, 3+ units)
   - `[ ]` Course Faculty / Professor Info
   - `[ ]` Course Room & Location
 - `[ ]` **Class Classification & Modalities**
@@ -107,20 +107,20 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 - **Custom RGBA Color Picker**: Fine-tune custom primary colors using RGBA sliders, hex input field (`#HEX`), preset swatches, and a live preview card.
 - **Navigation Dock Style**: Toggle between a classic **Fixed Bottom Bar** and a floating **Interactive Dock** with bouncy spring drag gesture physics.
 
-### 📊 20% Maximum Absence & Attendance Tracking Rule
-- **Philippine Academic 20% Rule**: In a standard 3-unit course (54 total class hours per semester), students meeting 3 hours per week (1.5 hours per class) can miss a maximum of **9.0 hours (~6 class sessions)**.
+### 📊 Dynamic Attendance & Unit-Based Absence Limits
+- **Flexible Course Units**: Automatically adjusts absence allowances based on individual course credit units (1-unit labs, 2-unit electives, 3-unit core lectures).
 - **Automated Absence Warnings**:
-  - `0 - 4.5 hrs missed`: **Safe**
-  - `4.5 - 7.5 hrs missed`: **Warning (1-2 classes left)**
-  - `7.5 - 9.0 hrs missed`: **Critical (Max Absences Reached)**
-  - `> 9.0 hrs missed`: **Advised to Withdraw (DRP) / Automatic 5.0 (FDA)**
-- **Interactive Action Buttons**: Instantly mark `+ Present` or `+ Absence (1.5h)` to calculate real-time remaining class allowance.
+  - **Safe**: Well within allowed absence limits.
+  - **Warning**: Approaching maximum allowed absences for the course unit weighting.
+  - **Critical**: Reached maximum absence limit before withdrawal threshold.
+  - **Advised to Withdraw**: Exceeded maximum allowed absences for the term.
+- **Schedule-Driven Data**: Seamlessly connects to user schedule data with a clean empty state card when planning new term schedules.
 
 ### 🚀 5-Step Interactive Onboarding
 - **Page 1 (Welcome & Schedule)**: Features a top-right **"Skip"** button, key benefit cards, and a scrollable **Live Schedule Preview** showing a realistic daily timetable.
 - **Page 2 (Student Profile Setup)**: Collects student identity details (**Full Name**, **Email**, **Age**, **Year Level**, **Student Status**, **Program**, **University**). Required fields prevent skipping without key information.
 - **Page 3 (Class Alerts)**: Configures default reminder offsets (`5 min` to `30 min` + `Custom...`) and displays live daily notification / weekly grid previews.
-- **Page 4 (Attendance Targets)**: Interactive target percentage slider (`60%` to `95%`) with live subject status cards (*Safe*, *Target Met*, *Warning*, *Advised to Withdraw / 5.0*).
+- **Page 4 (Attendance Targets)**: Interactive target percentage slider (`60%` to `95%`) with live subject status cards (*Safe*, *Target Met*, *Warning*, *Advised to Withdraw*).
 - **Page 5 (Personalization)**: Fine-tune app theme mode, color scheme palette, and navigation dock style before entering the app.
 
 ### 👤 Manage Profile Sub-Screen
@@ -135,7 +135,7 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 
 - 🎨 **RGBA & Hex Custom Theme Engine**: Custom color picker and Material 3 dynamic color generation.
 - ⛵ **Floating Dock Navigation**: Bouncy spring-animated floating navigation dock alongside standard bottom bar.
-- 📊 **Philippine 20% Absence Rule (9.0 Hours Limit)**: Automated calculation of remaining class allowance before withdrawal advice (*Advised to Withdraw / 5.0*).
+- 📊 **Dynamic Course Unit Attendance Tracking**: Automatic absence limit calculations based on course units (1, 2, 3+ units).
 - ⏳ **Free Time Period / Gap Checker**: Automatically detects and highlights free gaps between class blocks during the day.
 - 🖼️ **Export Schedule as Image**: Export your class timetable into a high-resolution image to save as a wallpaper or share with classmates.
 - 📈 **GPA & Target Grade Calculator**: Integrated grade calculation and target score estimator.
