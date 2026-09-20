@@ -134,6 +134,94 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 
 ---
 
+## 🛠️ Building & Running Lectrium
+
+Whether you are a software developer or someone without a technical background, building Lectrium on your computer is straightforward. Follow the instructions below for your preferred method.
+
+### 📋 Prerequisites
+Before building, ensure you have:
+- **Operating System**: Windows 10/11, macOS, or Linux.
+- **Java Development Kit (JDK)**: Java 17 or higher (automatically included if you install Android Studio).
+- **Git** (optional): For cloning the repository from the terminal.
+
+---
+
+### 🟢 Method 1: Using Android Studio (Recommended for Everyone)
+
+This is the easiest and most user-friendly method. Android Studio handles downloading necessary components automatically.
+
+#### Step 1: Download & Install Android Studio
+1. Download **[Android Studio](https://developer.android.com/studio)** (Ladybug or newer).
+2. Run the installer and follow the setup wizard (use default settings).
+
+#### Step 2: Get the Source Code
+* **Option A (Download ZIP)**:
+  1. On the [Lectrium GitHub repository](https://github.com/corintheknown/Lectrium), click the green **Code** button and select **Download ZIP**.
+  2. Extract the downloaded ZIP file to a folder on your computer.
+* **Option B (Git Clone)**:
+  1. Open your terminal / command prompt and run:
+     ```bash
+     git clone https://github.com/corintheknown/Lectrium.git
+     ```
+
+#### Step 3: Open the Project in Android Studio
+1. Launch Android Studio.
+2. Click **Open** (or `File > Open`).
+3. Select the extracted `Lectrium` folder and click **OK**.
+4. Android Studio will start **Gradle Sync** to download dependencies. Wait a minute or two until the progress bar at the bottom completes.
+
+#### Step 4: Run the Application
+1. Connect your Android device via USB (ensure **USB Debugging** is enabled in your phone's *Developer Options*), **OR** open **Device Manager** in Android Studio to create a virtual device (emulator).
+2. Click the green **Run ▶** button in the top-right toolbar.
+3. Android Studio will compile the app and launch it on your connected device or emulator!
+
+---
+
+### 💻 Method 2: Using the Command Line (For Developers / Terminal Users)
+
+If you prefer building directly from the command line without opening Android Studio, use the included Gradle Wrapper.
+
+#### Step 1: Clone the Repository
+```bash
+git clone https://github.com/corintheknown/Lectrium.git
+cd Lectrium
+```
+
+#### Step 2: Build the Debug APK
+
+* **On Windows (PowerShell / Command Prompt)**:
+  ```powershell
+  .\gradlew.bat assembleDebug
+  ```
+
+* **On macOS / Linux**:
+  ```bash
+  chmod +x gradlew
+  ./gradlew assembleDebug
+  ```
+
+#### Step 3: Locate & Install the APK
+* Once the build completes, the generated APK file will be located at:
+  ```
+  app/build/outputs/apk/debug/app-debug.apk
+  ```
+* You can transfer this APK file to your Android phone or install it directly via ADB:
+  ```bash
+  adb install app/build/outputs/apk/debug/app-debug.apk
+  ```
+
+---
+
+### ❓ Troubleshooting Common Build Issues
+
+| Issue | Cause | Solution |
+| :--- | :--- | :--- |
+| **Gradle Sync Failed** | Missing internet connection or interrupted download | Ensure you are connected to the internet and click **Sync Project with Gradle Files** (elephant icon) in the top-right of Android Studio. |
+| **Unsupported Java Version** | Older JDK configured in IDE | Go to `Settings > Build, Execution, Deployment > Build Tools > Gradle` and ensure **Gradle JDK** is set to **Java 17** or higher (or *Embedded JDK*). |
+| **Device Not Detected** | USB Debugging disabled on phone | Open phone settings > *About Phone* > tap *Build Number* 7 times to enable Developer Options. Go to *Developer Options* and enable **USB Debugging**. |
+
+---
+
 ## 🤖 Development & Generative AI Acknowledgement
 
 Lectrium was developed through a hybrid engineering approach:
