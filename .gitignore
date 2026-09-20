@@ -1,0 +1,58 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/DALVIK VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated build files & caches
+/build/
+**/build/
+.gradle/
+.kotlin/
+
+# Android Studio & IntelliJ IDEA
+.idea/
+*.iml
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local configuration files
+local.properties
+
+# Secrets, API Keys & Signing credentials
+secrets.properties
+secure.properties
+apikeys.properties
+key.properties
+google-services.json
+GoogleService-Info.plist
+*.keystore
+*.jks
+*.pepk
+*.p12
+*.key
+*.pem
+*.pfx
+
+# Log files
+*.log
+
+# Android Profiling & Memory Dumps
+*.hprof
+
+# OS / System generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
