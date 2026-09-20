@@ -57,6 +57,11 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 - `[x]` **Master Notification Suppression Logic**
 - `[x]` **High-Priority Notification Channel Setup**
 
+### 📊 Attendance Tracking System
+- `[x]` **20% Maximum Absence Rule Engine** (Calculates 9.0 hours max limit for 3-unit courses / 54 total semester hours)
+- `[x]` **Live Allowance & Warning Badges** (*Safe*, *Warning*, *Critical*, *Advised to Withdraw / 5.0*)
+- `[x]` **Interactive Attendance Actions** (`+ Present`, `+ Absence [1.5h]`)
+
 ### 📅 Class Schedules & Course Management
 - `[ ]` **Schedule Display Views**
   - `[ ]` Column / Timetable View
@@ -71,12 +76,6 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
   - `[ ]` Lecture vs. Laboratory Classification
   - `[ ]` Delivery Modality Tags (Face-to-Face, Asynchronous, Hybrid)
   - `[ ]` Smart Laboratory Constraints (Restricting Labs to Face-to-Face only)
-
-### 📊 Attendance Tracking
-- `[ ]` **Attendance Marking System**
-- `[ ]` **Custom Status Options** (e.g., *No Class*, *Professor On Leave*, *Holiday*)
-- `[ ]` **Custom Status Color Coding**
-- `[ ]` **Attendance Summary & Percentage Statistics**
 
 ### 📝 Tasks, Assignments & Exams
 - `[ ]` **Assignments Tracker** (Deadlines, Due Dates, Submission Status)
@@ -108,6 +107,15 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 - **Custom RGBA Color Picker**: Fine-tune custom primary colors using RGBA sliders, hex input field (`#HEX`), preset swatches, and a live preview card.
 - **Navigation Dock Style**: Toggle between a classic **Fixed Bottom Bar** and a floating **Interactive Dock** with bouncy spring drag gesture physics.
 
+### 📊 20% Maximum Absence & Attendance Tracking Rule
+- **Philippine Academic 20% Rule**: In a standard 3-unit course (54 total class hours per semester), students meeting 3 hours per week (1.5 hours per class) can miss a maximum of **9.0 hours (~6 class sessions)**.
+- **Automated Absence Warnings**:
+  - `0 - 4.5 hrs missed`: **Safe**
+  - `4.5 - 7.5 hrs missed`: **Warning (1-2 classes left)**
+  - `7.5 - 9.0 hrs missed`: **Critical (Max Absences Reached)**
+  - `> 9.0 hrs missed`: **Advised to Withdraw (DRP) / Automatic 5.0 (FDA)**
+- **Interactive Action Buttons**: Instantly mark `+ Present` or `+ Absence (1.5h)` to calculate real-time remaining class allowance.
+
 ### 🚀 5-Step Interactive Onboarding
 - **Page 1 (Welcome & Schedule)**: Features a top-right **"Skip"** button, key benefit cards, and a scrollable **Live Schedule Preview** showing a realistic daily timetable.
 - **Page 2 (Student Profile Setup)**: Collects student identity details (**Full Name**, **Email**, **Age**, **Year Level**, **Student Status**, **Program**, **University**). Required fields prevent skipping without key information.
@@ -127,7 +135,7 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 
 - 🎨 **RGBA & Hex Custom Theme Engine**: Custom color picker and Material 3 dynamic color generation.
 - ⛵ **Floating Dock Navigation**: Bouncy spring-animated floating navigation dock alongside standard bottom bar.
-- 📊 **Philippine / Academic Attendance Status Rules**: Attendance targets warning when absences exceed the 20% limit (*Advised to Withdraw / 5.0*).
+- 📊 **Philippine 20% Absence Rule (9.0 Hours Limit)**: Automated calculation of remaining class allowance before withdrawal advice (*Advised to Withdraw / 5.0*).
 - ⏳ **Free Time Period / Gap Checker**: Automatically detects and highlights free gaps between class blocks during the day.
 - 🖼️ **Export Schedule as Image**: Export your class timetable into a high-resolution image to save as a wallpaper or share with classmates.
 - 📈 **GPA & Target Grade Calculator**: Integrated grade calculation and target score estimator.
