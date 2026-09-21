@@ -56,3 +56,6 @@ Desktop.ini
 
 # VS Code
 .vscode/
+
+# Local planning file
+PLAN.md
