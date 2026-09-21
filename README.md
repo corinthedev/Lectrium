@@ -34,7 +34,7 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 - `[x]` **Color Scheme Engine** (Default Sky Blue, Material You Dynamic Colors, Custom ARGB/Hex picker with RGBA sliders & live preview)
 - `[x]` **Privacy Policy Screen** (Highlighting 100% local, on-device data storage with zero cloud telemetry)
 - `[x]` **Open Source Licenses Screen** (Attribution for third-party libraries)
-- `[x]` **App Version Info & Secret Easter Egg** (7-tap interactive trigger)
+- `[x]` **App Version Info**
 - `[ ]` **Dashboard Interface Density** (Compact/Crammed layout vs. Comfortable/Spacious padding)
 - `[ ]` **Text Size Scaling** (In-app typography scaling presets)
 - `[ ]` **Time Format Selection** (12-Hour AM/PM vs. 24-Hour display)
