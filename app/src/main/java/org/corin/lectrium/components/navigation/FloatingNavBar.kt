@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -39,14 +40,15 @@ import kotlin.math.roundToInt
 fun FloatingNavBar(
     currentScreenDestination: ScreenDestinations,
     onScreenDestinationSelected: (ScreenDestinations) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh
 ) {
     val destinations = ScreenDestinations.entries
     val selectedIndex = destinations.indexOf(currentScreenDestination).coerceAtLeast(0)
 
-    val itemWidth = 56.dp
+    val itemWidth = 44.dp
     val itemHeight = 44.dp
-    val padding = 6.dp
+    val padding = 4.dp
 
     val density = LocalDensity.current
     val itemWidthPx = with(density) { itemWidth.toPx() }
@@ -86,11 +88,11 @@ fun FloatingNavBar(
     }
 
     Surface(
-        modifier = modifier.padding(vertical = 22.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        tonalElevation = 6.dp,
-        shadowElevation = 8.dp,
-        color = MaterialTheme.colorScheme.surfaceContainerHigh
+        tonalElevation = 0.dp,
+        shadowElevation = 0.dp,
+        color = containerColor
     ) {
         Box(
             modifier = Modifier
@@ -102,7 +104,8 @@ fun FloatingNavBar(
                             dragOffsetPx = 0f
                         },
                         onDragEnd = {
-                            val finalOffsetPx = (baseOffsetPx + dragOffsetPx).coerceIn(0f, maxOffsetPx)
+                            val finalOffsetPx =
+                                (baseOffsetPx + dragOffsetPx).coerceIn(0f, maxOffsetPx)
                             val nearestIndex = (finalOffsetPx / itemWidthPx)
                                 .roundToInt()
                                 .coerceIn(0, destinations.size - 1)

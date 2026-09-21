@@ -23,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.corin.lectrium.BuildConfig
@@ -49,10 +48,6 @@ import org.corin.lectrium.viewmodel.ClassReminderViewModel
 import org.corin.lectrium.viewmodel.NavBarViewModel
 import org.corin.lectrium.viewmodel.ThemeViewModel
 
-/**
- * Stateful entry point for [SettingsScreen]. Collects ViewModel states safely
- * and delegates UI rendering to [SettingsScreenContent].
- */
 @Composable
 fun SettingsScreen(
     classReminderViewModel: ClassReminderViewModel? = null,
@@ -60,7 +55,9 @@ fun SettingsScreen(
     themeViewModel: ThemeViewModel? = null,
     currentNavBarStyle: NavBarStyle = NavBarStyle.BOTTOM,
     onNavBarStyleChange: (NavBarStyle) -> Unit = {},
-    onNavigateToManageProfile: () -> Unit = {}
+    onNavigateToManageProfile: () -> Unit = {},
+    onNavigateToPrivacyPolicy: () -> Unit = {},
+    onNavigateToOpenSourceLicenses: () -> Unit = {}
 ) {
     val activeNavBarStyle by (navBarViewModel?.navBarStyle?.collectAsStateWithLifecycle()
         ?: remember(currentNavBarStyle) { mutableStateOf(currentNavBarStyle) })
@@ -113,14 +110,12 @@ fun SettingsScreen(
             navBarViewModel?.onNavBarStyleSelected(newStyle)
             onNavBarStyleChange(newStyle)
         },
-        onNavigateToManageProfile = onNavigateToManageProfile
+        onNavigateToManageProfile = onNavigateToManageProfile,
+        onNavigateToPrivacyPolicy = onNavigateToPrivacyPolicy,
+        onNavigateToOpenSourceLicenses = onNavigateToOpenSourceLicenses
     )
 }
 
-/**
- * Fast, stateless UI content for [SettingsScreen]. Extremely efficient for rendering
- * and instant Compose Previews without ViewModel / Lifecycle collection overhead.
- */
 @Composable
 fun SettingsScreenContent(
     masterNotificationsEnabled: Boolean,
@@ -138,7 +133,9 @@ fun SettingsScreenContent(
     onCustomColorHexChanged: (String) -> Unit,
     onNavBarStyleSelected: (NavBarStyle) -> Unit,
     modifier: Modifier = Modifier,
-    onNavigateToManageProfile: () -> Unit = {}
+    onNavigateToManageProfile: () -> Unit = {},
+    onNavigateToPrivacyPolicy: () -> Unit = {},
+    onNavigateToOpenSourceLicenses: () -> Unit = {}
 ) {
     val context = LocalContext.current
 
@@ -189,18 +186,6 @@ fun SettingsScreenContent(
                         { showClassReminderDialog = true }
                     } else null
                 )
-            }
-        }
-
-        item(key = "section_schedule") {
-            SettingsSection(sectionTitle = "Schedule Display") {
-
-            }
-        }
-
-        item(key = "section_attendance") {
-            SettingsSection(sectionTitle = "Attendance") {
-
             }
         }
 
@@ -278,25 +263,38 @@ fun SettingsScreenContent(
                     )
                 }
 
-                SettingsSingleChoiceSegmentedItem(
-                    segmentedItemTitle = "Navigation Bar Style",
-                    segmentedItemSubtitle = "Choose a preferred navigation layout",
-                    segmentedItemOpts = NavBarStyle.entries,
-                    segmentedItemSelectedOption = activeNavBarStyle,
-                    segmentedItemIcon = R.drawable.dock_icon,
-                    onSelectedSegmentedItemOption = onNavBarStyleSelected,
-                    segmentedItemOptionLabel = { style ->
-                        when (style) {
-                            NavBarStyle.BOTTOM -> "Bottom"
-                            NavBarStyle.FLOATING -> "Floating"
-                        }
-                    }
-                )
+
             }
         }
 
         item(key = "section_about") {
-            SettingsSection(sectionTitle = "About") {
+            SettingsSection(sectionTitle = "About & Legal") {
+                SettingsItem(
+                    itemTitle = "Privacy Policy",
+                    itemIconRes = R.drawable.info_icon,
+                    trailingContent = {
+                        Icon(
+                            painter = painterResource(R.drawable.chevron_right_icon),
+                            contentDescription = "Navigate to Privacy Policy",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    onClick = onNavigateToPrivacyPolicy
+                )
+
+                SettingsItem(
+                    itemTitle = "Open Source Licenses",
+                    itemIconRes = R.drawable.info_icon,
+                    trailingContent = {
+                        Icon(
+                            painter = painterResource(R.drawable.chevron_right_icon),
+                            contentDescription = "Navigate to Open Source Licenses",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    onClick = onNavigateToOpenSourceLicenses
+                )
+
                 SettingsItem(
                     itemTitle = "App Version",
                     itemIconRes = R.drawable.info_icon,
@@ -398,25 +396,4 @@ fun SettingsScreenContent(
             }
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SettingsScreenPreview() {
-    SettingsScreenContent(
-        masterNotificationsEnabled = true,
-        enabledNotificationTypes = NotificationType.ALL,
-        currentClassReminderTiming = ReminderTiming.presets[1],
-        activeNavBarStyle = NavBarStyle.BOTTOM,
-        activeThemeMode = ThemeMode.SYSTEM,
-        activeColorSchemeMode = ColorSchemeMode.CUSTOM,
-        customColorHex = "38BDF8",
-        onMasterNotificationsToggled = {},
-        onNotificationTypeToggled = { _, _ -> },
-        onReminderTimingSelected = {},
-        onThemeModeSelected = {},
-        onColorSchemeModeSelected = {},
-        onCustomColorHexChanged = {},
-        onNavBarStyleSelected = {}
-    )
 }

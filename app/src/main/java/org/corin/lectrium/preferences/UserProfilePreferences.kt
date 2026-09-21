@@ -13,6 +13,9 @@ import org.corin.lectrium.model.UserProfile
 val Context.userProfileDataStore by preferencesDataStore("user_profile_preferences")
 
 object ProfileKeys {
+    val FIRST_NAME = stringPreferencesKey("first_name")
+    val MIDDLE_NAME = stringPreferencesKey("middle_name")
+    val LAST_NAME = stringPreferencesKey("last_name")
     val PROFILE_NAME = stringPreferencesKey("profile_name")
     val PROFILE_EMAIL = stringPreferencesKey("profile_email")
     val PROFILE_AGE = stringPreferencesKey("profile_age")
@@ -23,12 +26,27 @@ object ProfileKeys {
     val PROFILE_IMAGE = stringPreferencesKey("profile_image")
     val PROFILE_SETUP_COMPLETE = booleanPreferencesKey("is_profile_setup_complete")
     val IS_ONBOARDING_COMPLETED = booleanPreferencesKey("is_onboarding_completed")
+    val IS_PRIVACY_POLICY_ACCEPTED = booleanPreferencesKey("is_privacy_policy_accepted")
 }
 
 class UserProfilePreferences(private val context: Context) {
     val userProfile: Flow<UserProfile> = context.userProfileDataStore.data.map { preferences ->
+        val savedName = preferences[ProfileKeys.PROFILE_NAME] ?: ""
+        val parts = savedName.split(" ").filter { it.isNotBlank() }
+        val defaultFirst = if (parts.isNotEmpty()) parts.first() else ""
+        val defaultLast = if (parts.size > 1) parts.last() else ""
+
+        val fName = preferences[ProfileKeys.FIRST_NAME] ?: defaultFirst
+        val mName = preferences[ProfileKeys.MIDDLE_NAME] ?: ""
+        val lName = preferences[ProfileKeys.LAST_NAME] ?: defaultLast
+
         UserProfile(
-            profileName = preferences[ProfileKeys.PROFILE_NAME] ?: "",
+            firstName = fName,
+            middleName = mName,
+            lastName = lName,
+            profileName = savedName.ifBlank {
+                listOf(fName, mName, lName).filter { it.isNotBlank() }.joinToString(" ")
+            },
             email = preferences[ProfileKeys.PROFILE_EMAIL] ?: "",
             age = preferences[ProfileKeys.PROFILE_AGE] ?: "",
             university = preferences[ProfileKeys.PROFILE_UNIVERSITY] ?: "",
@@ -44,8 +62,15 @@ class UserProfilePreferences(private val context: Context) {
         preferences[ProfileKeys.IS_ONBOARDING_COMPLETED] ?: false
     }
 
+    val isPrivacyPolicyAcceptedFlow: Flow<Boolean> =
+        context.userProfileDataStore.data.map { preferences ->
+            preferences[ProfileKeys.IS_PRIVACY_POLICY_ACCEPTED] ?: false
+        }
+
     suspend fun updateUserProfile(
-        profileName: String,
+        firstName: String,
+        middleName: String,
+        lastName: String,
         email: String,
         age: String,
         profileUniversity: String,
@@ -53,8 +78,13 @@ class UserProfilePreferences(private val context: Context) {
         profileYearLevel: String,
         studentStatus: String
     ) {
+        val fullName =
+            listOf(firstName, middleName, lastName).filter { it.isNotBlank() }.joinToString(" ")
         context.userProfileDataStore.edit { preferences ->
-            preferences[ProfileKeys.PROFILE_NAME] = profileName
+            preferences[ProfileKeys.FIRST_NAME] = firstName
+            preferences[ProfileKeys.MIDDLE_NAME] = middleName
+            preferences[ProfileKeys.LAST_NAME] = lastName
+            preferences[ProfileKeys.PROFILE_NAME] = fullName
             preferences[ProfileKeys.PROFILE_EMAIL] = email
             preferences[ProfileKeys.PROFILE_AGE] = age
             preferences[ProfileKeys.PROFILE_UNIVERSITY] = profileUniversity
@@ -75,6 +105,12 @@ class UserProfilePreferences(private val context: Context) {
     suspend fun setOnboardingCompleted(completed: Boolean) {
         context.userProfileDataStore.edit { preferences ->
             preferences[ProfileKeys.IS_ONBOARDING_COMPLETED] = completed
+        }
+    }
+
+    suspend fun setPrivacyPolicyAccepted(accepted: Boolean) {
+        context.userProfileDataStore.edit { preferences ->
+            preferences[ProfileKeys.IS_PRIVACY_POLICY_ACCEPTED] = accepted
         }
     }
 }

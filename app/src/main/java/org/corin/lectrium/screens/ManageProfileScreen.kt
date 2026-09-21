@@ -52,7 +52,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.corin.lectrium.R
@@ -72,7 +71,10 @@ fun ManageProfileScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var name by remember(currentProfile) { mutableStateOf(currentProfile.profileName) }
+    var firstName by remember(currentProfile) { mutableStateOf(currentProfile.firstName) }
+    var middleName by remember(currentProfile) { mutableStateOf(currentProfile.middleName) }
+    var lastName by remember(currentProfile) { mutableStateOf(currentProfile.lastName) }
+
     var email by remember(currentProfile) { mutableStateOf(currentProfile.email) }
     var age by remember(currentProfile) { mutableStateOf(currentProfile.age) }
     var university by remember(currentProfile) { mutableStateOf(currentProfile.university) }
@@ -84,6 +86,10 @@ fun ManageProfileScreen(
         mutableStateOf(currentProfile.studentStatus.ifBlank { "Regular" })
     }
     var profileImagePath by remember(currentProfile) { mutableStateOf(currentProfile.profileImage) }
+
+    val fullNameForAvatar = remember(firstName, middleName, lastName) {
+        listOf(firstName, middleName, lastName).filter { it.isNotBlank() }.joinToString(" ")
+    }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -165,13 +171,13 @@ fun ManageProfileScreen(
                             )
                         } else {
                             UserInitials(
-                                username = name.ifBlank { "Alex Rivera" },
+                                username = fullNameForAvatar.ifBlank { "Alex Rivera" },
                                 profileSize = 96.dp
                             )
                         }
                     } else {
                         UserInitials(
-                            username = name.ifBlank { "Alex Rivera" },
+                            username = fullNameForAvatar.ifBlank { "Alex Rivera" },
                             profileSize = 96.dp
                         )
                     }
@@ -217,14 +223,14 @@ fun ManageProfileScreen(
                 ) {
                     Column {
                         Text(
-                            text = "Full name",
+                            text = "Given Name / First Name *",
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         OutlinedTextField(
-                            value = name,
-                            onValueChange = { name = it },
+                            value = firstName,
+                            onValueChange = { firstName = it },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -234,9 +240,44 @@ fun ManageProfileScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Middle Name",
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            OutlinedTextField(
+                                value = middleName,
+                                onValueChange = { middleName = it },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Last Name *",
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            OutlinedTextField(
+                                value = lastName,
+                                onValueChange = { lastName = it },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         Column(modifier = Modifier.weight(0.72f)) {
                             Text(
-                                text = "Email address",
+                                text = "Email address *",
                                 style = MaterialTheme.typography.titleSmall,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
@@ -348,7 +389,9 @@ fun ManageProfileScreen(
                 onClick = {
                     scope.launch {
                         userProfilePreferences?.updateUserProfile(
-                            profileName = name,
+                            firstName = firstName,
+                            middleName = middleName,
+                            lastName = lastName,
                             email = email,
                             age = age,
                             profileUniversity = university,
@@ -377,20 +420,4 @@ fun ManageProfileScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ManageProfileScreenPreview() {
-    ManageProfileScreen(
-        currentProfile = UserProfile(
-            profileName = "Alex Rivera",
-            email = "alex.rivera@up.edu.ph",
-            age = "20",
-            university = "University of the Philippines",
-            program = "BS Computer Science",
-            yearLevel = "3rd year",
-            studentStatus = "Regular"
-        )
-    )
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) 2026 Corin. All rights reserved. Owned by Corin. -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +15,79 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lectrium">
+
+        <receiver
+            android:name=".notifications.AcademicReminderReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.corin.lectrium.ACTION_CLASS_REMINDER" />
+                <action android:name="org.corin.lectrium.ACTION_ASSIGNMENT_REMINDER" />
+                <action android:name="org.corin.lectrium.ACTION_EXAM_REMINDER" />
+                <action android:name="org.corin.lectrium.ACTION_PROJECT_REMINDER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Widgets -->
+        <receiver
+            android:name=".widgets.SchedulesWidgetProvider"
+            android:exported="true"
+            android:label="Lectrium Schedules">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_schedules_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.DailyScheduleWidgetProvider"
+            android:exported="true"
+            android:label="Today's Schedule">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_daily_schedule_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.ExamsWidgetProvider"
+            android:exported="true"
+            android:label="Exams Countdown">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_exams_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.AssignmentsWidgetProvider"
+            android:exported="true"
+            android:label="Assignments Due">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_assignments_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.ProjectsWidgetProvider"
+            android:exported="true"
+            android:label="Projects Due">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_projects_info" />
+        </receiver>
+
         <activity
             android:name=".LectriumApp"
             android:exported="true"

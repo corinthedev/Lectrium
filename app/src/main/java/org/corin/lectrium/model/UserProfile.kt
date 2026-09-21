@@ -2,6 +2,9 @@
 package org.corin.lectrium.model
 
 data class UserProfile(
+    val firstName: String = "",
+    val middleName: String = "",
+    val lastName: String = "",
     val profileName: String = "",
     val email: String = "",
     val age: String = "",
@@ -11,4 +14,13 @@ data class UserProfile(
     val studentStatus: String = "Regular",
     val profileImage: String? = null,
     val isSetupComplete: Boolean = false
-)
+) {
+    val fullDisplayName: String
+        get() {
+            if (firstName.isNotBlank() || lastName.isNotBlank()) {
+                val mid = if (middleName.isNotBlank()) " $middleName" else ""
+                return "$firstName$mid $lastName".trim()
+            }
+            return profileName
+        }
+}

@@ -148,7 +148,7 @@ private val onboardingPages = listOf(
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
-    onSaveProfile: (name: String, email: String, age: String, university: String, program: String, yearLevel: String, studentStatus: String) -> Unit = { _, _, _, _, _, _, _ -> },
+    onSaveProfile: (firstName: String, middleName: String, lastName: String, email: String, age: String, university: String, program: String, yearLevel: String, studentStatus: String) -> Unit = { _, _, _, _, _, _, _, _, _ -> },
     onSaveThemeMode: (ThemeMode) -> Unit = {},
     onSaveColorSchemeMode: (ColorSchemeMode) -> Unit = {},
     onSaveNavBarStyle: (NavBarStyle) -> Unit = {},
@@ -158,7 +158,9 @@ fun OnBoardingScreen(
     val pagerCoroutineScope = rememberCoroutineScope()
 
     // Page 2 State: Student Profile
-    var profileName by remember { mutableStateOf("") }
+    var profileFirstName by remember { mutableStateOf("") }
+    var profileMiddleName by remember { mutableStateOf("") }
+    var profileLastName by remember { mutableStateOf("") }
     var profileEmail by remember { mutableStateOf("") }
     var profileAge by remember { mutableStateOf("") }
     var profileUniversity by remember { mutableStateOf("") }
@@ -436,7 +438,7 @@ fun OnBoardingScreen(
                         }
                     }
 
-                    // Page 2 Specific Content: Student Profile Form with Required Field Validation
+                    // Page 2 Specific Content: Student Profile Form
                     if (pageIndex == 1) {
                         ElevatedCard(
                             modifier = Modifier
@@ -473,15 +475,39 @@ fun OnBoardingScreen(
                                 Spacer(modifier = Modifier.height(10.dp))
 
                                 OutlinedTextField(
-                                    value = profileName,
-                                    onValueChange = { profileName = it },
-                                    label = { Text("Full Name *") },
+                                    value = profileFirstName,
+                                    onValueChange = { profileFirstName = it },
+                                    label = { Text("Given Name / First Name *") },
                                     singleLine = true,
-                                    isError = profileName.isBlank(),
+                                    isError = profileFirstName.isBlank(),
                                     modifier = Modifier.fillMaxWidth()
                                 )
 
-                                Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    OutlinedTextField(
+                                        value = profileMiddleName,
+                                        onValueChange = { profileMiddleName = it },
+                                        label = { Text("Middle Name") },
+                                        singleLine = true,
+                                        modifier = Modifier.weight(1f)
+                                    )
+
+                                    OutlinedTextField(
+                                        value = profileLastName,
+                                        onValueChange = { profileLastName = it },
+                                        label = { Text("Last Name *") },
+                                        singleLine = true,
+                                        isError = profileLastName.isBlank(),
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.height(6.dp))
 
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -578,7 +604,7 @@ fun OnBoardingScreen(
                         }
                     }
 
-                    // Page 3 Specific Content: Class Alert Preferences & Dynamic View Preview
+                    // Page 3 Specific Content: Class Alert Preferences
                     if (pageIndex == 2) {
                         ElevatedCard(
                             modifier = Modifier
@@ -643,7 +669,9 @@ fun OnBoardingScreen(
                                 Spacer(modifier = Modifier.height(8.dp))
 
                                 SingleChoiceSegmentedButtonRow(
-                                    modifier = Modifier.fillMaxWidth().height(38.dp)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(38.dp)
                                 ) {
                                     listOf("Daily View", "Weekly Grid").forEachIndexed { idx, option ->
                                         SegmentedButton(
@@ -912,7 +940,9 @@ fun OnBoardingScreen(
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 SingleChoiceSegmentedButtonRow(
-                                    modifier = Modifier.fillMaxWidth().height(38.dp)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(38.dp)
                                 ) {
                                     ThemeMode.entries.forEachIndexed { idx, mode ->
                                         SegmentedButton(
@@ -941,7 +971,9 @@ fun OnBoardingScreen(
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 SingleChoiceSegmentedButtonRow(
-                                    modifier = Modifier.fillMaxWidth().height(38.dp)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(38.dp)
                                 ) {
                                     ColorSchemeMode.entries.forEachIndexed { idx, mode ->
                                         SegmentedButton(
@@ -970,7 +1002,9 @@ fun OnBoardingScreen(
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 SingleChoiceSegmentedButtonRow(
-                                    modifier = Modifier.fillMaxWidth().height(38.dp)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(38.dp)
                                 ) {
                                     NavBarStyle.entries.forEachIndexed { idx, style ->
                                         SegmentedButton(
@@ -999,7 +1033,8 @@ fun OnBoardingScreen(
                     }
 
                     val isPage2Valid = (pageIndex != 1) || (
-                        profileName.isNotBlank() &&
+                            profileFirstName.isNotBlank() &&
+                                    profileLastName.isNotBlank() &&
                         profileEmail.isNotBlank() &&
                         profileUniversity.isNotBlank() &&
                         profileProgram.isNotBlank()
@@ -1013,7 +1048,9 @@ fun OnBoardingScreen(
                                 }
                             } else {
                                 onSaveProfile(
-                                    profileName,
+                                    profileFirstName,
+                                    profileMiddleName,
+                                    profileLastName,
                                     profileEmail,
                                     profileAge,
                                     profileUniversity,

@@ -1,11 +1,8 @@
-> [!WARNING]
-> **PROJECT IN HEAVY DEVELOPMENT**
->
-> Please note that **Lectrium** is currently under **HEAVY DEVELOPMENT**. Not all features described in this document have been fully implemented yet. For details on completed, in-progress, and planned features, please refer to the [Feature Implementation Tracker](#-feature-implementation-tracker).
-
 # Lectrium
 
-**Lectrium** is a modern, feature-rich Android application built specifically for **college students** to manage their schedules, class reminders, assignments, exams, attendance tracking, and academic performance.
+**Lectrium** is a modern, feature-rich Android application built specifically for **college students
+** to manage their schedules, class reminders, assignments, projects, exams, attendance tracking,
+and academic performance.
 
 College academic life differs significantly from Junior/Senior High School systems—with irregular class blocks, varying day schedules, credit units, and unique attendance dynamics. Lectrium is tailored specifically to address these college workflows.
 
@@ -16,7 +13,6 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
 ## 📍 Feature Implementation Tracker
 
 > **Legend**: `[x]` Implemented | `[/]` In Progress | `[ ]` Planned
-> *(Note: This tracker is a living roadmap and is updated continuously as development progresses.)*
 
 ### ⚙️ App Core & Architecture
 - `[x]` **Jetpack Compose UI Framework & Material 3 Theming**
@@ -25,229 +21,112 @@ The project takes inspiration from the open-source app [Lectro](https://github.c
   - `[x]` Color Scheme Options (Sky Blue Default, Material You Dynamic Color, Custom Palette)
   - `[x]` Custom ARGB/Hex Color Picker with Live Theme Preview, Preset Swatches, and RGBA Sliders
 - `[x]` **Navigation Engine**
-  - `[x]` Bottom Navigation Bar Routing
-  - `[x]` Navigation Bar Style Customization (Floating Dock with Bouncy Drag Physics vs. Fixed Bottom Bar)
+  - `[x]` Floating Navigation Dock with Bouncy Drag Physics & Fluid Transition Animations
   - `[x]` Smooth Animated Screen & Subscreen Transitions (`AnimatedContent` Fade/Scale)
-- `[x]` **User Profile Management**
-  - `[x]` **5-Step Interactive Onboarding Walkthrough**:
-    - Page 1: Welcome & Scrollable Live Mock Schedule Preview with top-right "Skip" action.
-    - Page 2: Student Profile Setup Form (Full Name \*, Email Address \*, Age, Year Level Chips [`1st Year` to `Extendee`], Student Status Chips [`Regular`, `Irregular`, `Shiftee`], Program \*, University \*).
-    - Page 3: Class Alert Preferences (Reminder Offset chips, Custom Duration picker, Daily View vs. Weekly Grid preview).
-    - Page 4: Attendance Target Setup (Target percentage slider, live subject status badges: *Safe*, *Target Met*, *Warning*, *Advised to Withdraw*).
-    - Page 5: Personalization & Theme Styling.
-  - `[x]` **Dedicated Manage Profile Sub-Screen** (`ManageProfileScreen`):
-    - Top bar with Back arrow `←` and `"Manage profile"` title.
-    - Avatar circle showing user initials (`UserInitials`) or profile photo.
-    - System Photo Picker (`PickVisualMedia`) for gallery photo selection & local file storage.
-    - Compact form layout with side-by-side fields (`Email address` + `Age`).
-    - Year Level & Student Status chips.
-    - Save changes action updating DataStore.
-  - `[x]` Profile Persistence (DataStore) & Initials Avatar Fallback
+  - `[x]` Liquid Spring Expansion FAB Transition alongside Floating Dock
+- `[x]` **User Profile & Legal Management**
+  - `[x]` **5-Step Interactive Onboarding Walkthrough**
+  - `[x]` **Dedicated Manage Profile Sub-Screen** (`ManageProfileScreen`) with Given Name, Middle
+    Name, & Last Name
+  - `[x]` **Privacy Policy Screen** (`PrivacyPolicyScreen` — 100% Local On-Device Storage)
+  - `[x]` **Open Source Licenses Screen** (`OpenSourceLicensesScreen`)
+  - `[x]` Profile Persistence (DataStore) & Initials Avatar / Profile Picture Fallback
 - `[x]` **App Settings & Preferences**
   - `[x]` Master Notifications Toggle
   - `[x]` Selective Notification Categories Bottom Sheet
-  - `[x]` Class Reminder Duration Configuration (Presets + Custom Dialog with Minutes/Hours/Days units)
+  - `[x]` Class Reminder Duration Configuration (Presets + Custom Dialog)
   - `[x]` Custom Theme Color Picker Bottom Sheet
-  - `[x]` Manage Profile Navigation Entry with Chevron Indicator (`>`)
-  - `[x]` Navigation Bar Style Picker
+  - `[x]` Manage Profile, Privacy Policy, and Open Source Licenses Entries
   - `[x]` App Version Secret Easter Egg (7-tap trigger)
+- `[ ]` **Proper Application Icons & Branding** (Custom high-resolution launcher icons, adaptive
+  icon suite, and thematic app iconography)
+- `[ ]` **Expanded Interactive Popups & Dialogs** (Additional quick-edit dialogs, delete
+  confirmations, detail modals, and prompt popups across screens)
 
 ### 🔔 Notifications Engine
-- `[x]` **Class Reminder Broadcast Receiver**
+
+- `[x]` **Academic Reminder Alarm Scheduler & Broadcast Receiver**
+- `[x]` **Class Reminders, Assignment Due, Exam Alerts, and Project Deadline Notifications**
 - `[x]` **Master Notification Suppression Logic**
-- `[x]` **High-Priority Notification Channel Setup**
+- `[x]` **High-Priority Material 3 Notification Channel Setup**
 
 ### 📊 Attendance Tracking System
 - `[x]` **Dynamic Unit-Based Attendance Engine** (Calculates absence allowances dynamically for 1-unit, 2-unit, 3-unit courses)
 - `[x]` **Live Allowance & Warning Badges** (*Safe*, *Warning*, *Critical*, *Advised to Withdraw*)
-- `[x]` **Schedule Integration Ready** (Presents clean empty state awaiting schedule creation)
+- `[x]` **Schedule Integration & Automatic Synchronizations**
+- `[ ]` **Attendance Tracker Enhancements & Adjustments** (Adjustments to attendance logging
+  workflows, attendance record editing, manual override controls, and custom threshold rules)
 
 ### 📅 Class Schedules & Course Management
-- `[ ]` **Schedule Display Views**
-  - `[ ]` Column / Timetable View
-  - `[ ]` Full Calendar View
-  - `[ ]` Flexible Days Layout (Mon–Fri default + Custom Saturday/Sunday days)
-- `[ ]` **Course Metadata**
-  - `[ ]` Course Code, Course Name, Course Section
-  - `[ ]` Course Units / Credits (1, 2, 3+ units)
-  - `[ ]` Course Faculty / Professor Info
-  - `[ ]` Course Room & Location
-- `[ ]` **Class Classification & Modalities**
-  - `[ ]` Lecture vs. Laboratory Classification
-  - `[ ]` Delivery Modality Tags (Face-to-Face, Asynchronous, Hybrid)
-  - `[ ]` Smart Laboratory Constraints (Restricting Labs to Face-to-Face only)
 
-### 📝 Tasks, Assignments & Exams
-- `[ ]` **Assignments Tracker** (Deadlines, Due Dates, Submission Status)
-- `[ ]` **Exams Tracker** (Exam Dates, Topics, Room Locations)
+- `[x]` **Schedule Display Views**
+  - `[x]` Column / Daily Timeline View (`DayScheduleScreen`)
+  - `[x]` Full Timetable View (`TimetableGrid` & `WeeklyScheduleScreen`)
+  - `[x]` Full Calendar Grid View (`CalendarGridView`)
+  - `[x]` Flexible Days Layout (Mon–Fri default + Custom Saturday/Sunday toggles)
+- `[x]` **Course Metadata**
+  - `[x]` Course Code, Course Name, Course Section
+  - `[x]` Course Units / Credits (1, 2, 3+ units)
+  - `[x]` Course Faculty / Professor Info
+  - `[x]` Course Room & Location
+- `[x]` **Class Classification & Modalities**
+  - `[x]` Lecture vs. Laboratory Classification
+  - `[x]` Delivery Modality Tags (Face-to-Face, Asynchronous, Hybrid)
+- `[ ]` **Course Schedules Screen Management** (Editing existing schedules, deleting schedules,
+  updating time blocks/rooms, and schedule conflict handling)
 
-### 📈 Academic Performance Tools
-- `[ ]` **GPA Calculator** (Semester GPA & Cumulative GPA)
-- `[ ]` **Target Grade Estimator** ("What grade do I need on the final exam?")
+### 📝 Tasks, Assignments, Projects & Exams
+
+- `[x]` **Assignments Tracker** (Deadlines, Due Dates, Status Filtering, Priority Chips)
+- `[x]` **Projects Tracker** (Term Project Deadlines, Milestones Checklist, Team Members, Progress
+  Bar)
+- `[x]` **Exams Tracker** (Exam Countdown Cards, Venues, Weights %, Study Topic Checklists)
+- `[ ]` **Full Academic & Grade Tracker System** (Comprehensive tracking for course grades, GPA
+  calculations, term targets, and overall academic progress)
+- `[ ]` **Dedicated Exams & Quizzes Screen & Features** (Comprehensive exams & quizzes management
+  screen, score logging, venue/room details, and quiz countdowns)
+- `[ ]` **Tasks & Assignments Screen Refinements** (Sub-task checklists, submission status
+  workflows, priority filtering enhancements, and detailed task views)
 
 ### 🔕 Automation & Productivity
-- `[ ]` **In-Class Auto-Mute / Do Not Disturb (DND)**
-- `[ ]` **Free Time Period / Gap Checker** (Detecting gaps between class blocks)
-- `[ ]` **Export Schedule as Image**
-- `[ ]` **Makeup Class Schedule Overrides** (Temporary schedule shifts)
+
+- `[x]` **Free Time Period / Gap Checker** (Detecting and highlighting free gaps between consecutive
+  class blocks)
+- `[x]` **Export Schedule as Image** (`ScheduleImageExporter`)
+- `[x]` **In-Class Auto-Mute / Do Not Disturb (DND) Notice Toggle**
 
 ### 📱 System Integration & Archiving
-- `[ ]` **Home Screen Widgets** (Daily schedule at a glance & upcoming deadlines)
-- `[ ]` **Academic Archive Manager**
-  - `[ ]` Semester Schedule Reset
-  - `[ ]` Option to Archive Past Term Records or Delete Permanently
 
----
-
-## 🌟 Key Features Overview
-
-### 🎨 Deep Customization & Theme Engine
-- **Theme Modes**: Easily switch between **System Default**, **Light Theme**, and **Dark Theme**.
-- **Color Schemes**: Choose between **Sky Blue (Default)**, **Material You Dynamic Color** (matching Android 12+ wallpaper accents), or **Custom Theme**.
-- **Custom RGBA Color Picker**: Fine-tune custom primary colors using RGBA sliders, hex input field (`#HEX`), preset swatches, and a live preview card.
-- **Navigation Dock Style**: Toggle between a classic **Fixed Bottom Bar** and a floating **Interactive Dock** with bouncy spring drag gesture physics.
-
-### 📊 Dynamic Attendance & Unit-Based Absence Limits
-- **Flexible Course Units**: Automatically adjusts absence allowances based on individual course credit units (1-unit labs, 2-unit electives, 3-unit core lectures).
-- **Automated Absence Warnings**:
-  - **Safe**: Well within allowed absence limits.
-  - **Warning**: Approaching maximum allowed absences for the course unit weighting.
-  - **Critical**: Reached maximum absence limit before withdrawal threshold.
-  - **Advised to Withdraw**: Exceeded maximum allowed absences for the term.
-- **Schedule-Driven Data**: Seamlessly connects to user schedule data with a clean empty state card when planning new term schedules.
-
-### 🚀 5-Step Interactive Onboarding
-- **Page 1 (Welcome & Schedule)**: Features a top-right **"Skip"** button, key benefit cards, and a scrollable **Live Schedule Preview** showing a realistic daily timetable.
-- **Page 2 (Student Profile Setup)**: Collects student identity details (**Full Name**, **Email**, **Age**, **Year Level**, **Student Status**, **Program**, **University**). Required fields prevent skipping without key information.
-- **Page 3 (Class Alerts)**: Configures default reminder offsets (`5 min` to `30 min` + `Custom...`) and displays live daily notification / weekly grid previews.
-- **Page 4 (Attendance Targets)**: Interactive target percentage slider (`60%` to `95%`) with live subject status cards (*Safe*, *Target Met*, *Warning*, *Advised to Withdraw*).
-- **Page 5 (Personalization)**: Fine-tune app theme mode, color scheme palette, and navigation dock style before entering the app.
-
-### 👤 Manage Profile Sub-Screen
-- Dedicated subscreen accessible via Settings featuring a `>` chevron indicator.
-- Tap avatar to upload a profile picture from gallery (`PickVisualMedia`) or view initials avatar fallback.
-- Space-efficient side-by-side layout for compact fields (`Email address` + `Age`) and filter chips for Year Level (`1st year` to `5th year+`) & Student Status (`Regular`, `Irregular`, `Shiftee`).
-- Saves changes directly to DataStore preferences.
-
----
-
-## 🔥 Exclusive Lectrium Features (Not in Lectro)
-
-- 🎨 **RGBA & Hex Custom Theme Engine**: Custom color picker and Material 3 dynamic color generation.
-- ⛵ **Floating Dock Navigation**: Bouncy spring-animated floating navigation dock alongside standard bottom bar.
-- 📊 **Dynamic Course Unit Attendance Tracking**: Automatic absence limit calculations based on course units (1, 2, 3+ units).
-- ⏳ **Free Time Period / Gap Checker**: Automatically detects and highlights free gaps between class blocks during the day.
-- 🖼️ **Export Schedule as Image**: Export your class timetable into a high-resolution image to save as a wallpaper or share with classmates.
-- 📈 **GPA & Target Grade Calculator**: Integrated grade calculation and target score estimator.
+- `[x]` **Material 3 Home Screen Widgets**:
+  - `[x]` Schedules View Widget
+  - `[x]` Daily Schedule View Widget
+  - `[x]` Exams Countdown Widget
+  - `[x]` Assignments Due Widget
+  - `[x]` Projects Due Widget
+- `[x]` **Academic Archive Manager** (`ArchiveManager` for semester schedule resets)
 
 ---
 
 ## 🛠️ Building & Running Lectrium
 
-Whether you are a software developer or someone without a technical background, building Lectrium on your computer is straightforward. Follow the instructions below for your preferred method.
+### 💻 Command Line
 
-### 📋 Prerequisites
-Before building, ensure you have:
-- **Operating System**: Windows 10/11, macOS, or Linux.
-- **Java Development Kit (JDK)**: Java 17 or higher (automatically included if you install Android Studio).
-- **Git** (optional): For cloning the repository from the terminal.
-
----
-
-### 🟢 Method 1: Using Android Studio (Recommended for Everyone)
-
-This is the easiest and most user-friendly method. Android Studio handles downloading necessary components automatically.
-
-#### Step 1: Download & Install Android Studio
-1. Download **[Android Studio](https://developer.android.com/studio)** (Ladybug or newer).
-2. Run the installer and follow the setup wizard (use default settings).
-
-#### Step 2: Get the Source Code
-* **Option A (Download ZIP)**:
-  1. On the [Lectrium GitHub repository](https://github.com/corintheknown/Lectrium), click the green **Code** button and select **Download ZIP**.
-  2. Extract the downloaded ZIP file to a folder on your computer.
-* **Option B (Git Clone)**:
-  1. Open your terminal / command prompt and run:
-     ```bash
-     git clone https://github.com/corintheknown/Lectrium.git
-     ```
-
-#### Step 3: Open the Project in Android Studio
-1. Launch Android Studio.
-2. Click **Open** (or `File > Open`).
-3. Select the extracted `Lectrium` folder and click **OK**.
-4. Android Studio will start **Gradle Sync** to download dependencies. Wait a minute or two until the progress bar at the bottom completes.
-
-#### Step 4: Run the Application
-1. Connect your Android device via USB (ensure **USB Debugging** is enabled in your phone's *Developer Options*), **OR** open **Device Manager** in Android Studio to create a virtual device (emulator).
-2. Click the green **Run ▶** button in the top-right toolbar.
-3. Android Studio will compile the app and launch it on your connected device or emulator!
-
----
-
-### 💻 Method 2: Using the Command Line (For Developers / Terminal Users)
-
-If you prefer building directly from the command line without opening Android Studio, use the included Gradle Wrapper.
-
-#### Step 1: Clone the Repository
-```bash
-git clone https://github.com/corintheknown/Lectrium.git
-cd Lectrium
+```powershell
+.\gradlew.bat assembleDebug
 ```
 
-#### Step 2: Build the Debug APK
+```bash
+./gradlew assembleDebug
+```
 
-* **On Windows (PowerShell / Command Prompt)**:
-  ```powershell
-  .\gradlew.bat assembleDebug
-  ```
+Generated APK location:
 
-* **On macOS / Linux**:
-  ```bash
-  chmod +x gradlew
-  ./gradlew assembleDebug
-  ```
-
-#### Step 3: Locate & Install the APK
-* Once the build completes, the generated APK file will be located at:
-  ```
-  app/build/outputs/apk/debug/app-debug.apk
-  ```
-* You can transfer this APK file to your Android phone or install it directly via ADB:
-  ```bash
-  adb install app/build/outputs/apk/debug/app-debug.apk
-  ```
-
----
-
-### ❓ Troubleshooting Common Build Issues
-
-| Issue | Cause | Solution |
-| :--- | :--- | :--- |
-| **Gradle Sync Failed** | Missing internet connection or interrupted download | Ensure you are connected to the internet and click **Sync Project with Gradle Files** (elephant icon) in the top-right of Android Studio. |
-| **Unsupported Java Version** | Older JDK configured in IDE | Go to `Settings > Build, Execution, Deployment > Build Tools > Gradle` and ensure **Gradle JDK** is set to **Java 17** or higher (or *Embedded JDK*). |
-| **Device Not Detected** | USB Debugging disabled on phone | Open phone settings > *About Phone* > tap *Build Number* 7 times to enable Developer Options. Go to *Developer Options* and enable **USB Debugging**. |
-
----
-
-## 🤖 Development & Generative AI Acknowledgement
-
-Lectrium was developed through a hybrid engineering approach:
-- **Generative AI Assistance**: Leveraged for architectural guidance, boilerplate generation, and debugging assistance.
-- **Handcoded & Manual Implementation**: Features, business logic, UI layouts, and state management were handcoded, customized, and refined specifically for Lectrium.
-- **External Inspiration**: Inspired by and referenced from existing projects like [Lectro](https://github.com/Pankaj-Meharchandani/Lectro) and modern Android Jetpack best practices.
+```
+app/build/outputs/apk/debug/app-debug.apk
+```
 
 ---
 
 ## 🤝 Contributing & Licensing
 
-Contributions, feature suggestions, and bug reports are welcome!
-
-### License Overview
-This project is released under the **Lectrium Custom Restricted License**. Under this license:
-- ✅ You **CAN** contribute to this repository, submit pull requests, open issues, and suggest improvements.
-- ✅ You **CAN** reference code snippets and patterns from this project for educational and learning purposes.
-- ❌ You **CANNOT** claim this project, codebase, or branding as your own.
-- ❌ You **CANNOT** fork or copy this project to re-distribute, rebrand, or publish it as a separate product or app store listing.
-
-For full license details, please refer to the [LICENSE](./LICENSE) file.
+Released under the **Lectrium Custom Restricted License**.
